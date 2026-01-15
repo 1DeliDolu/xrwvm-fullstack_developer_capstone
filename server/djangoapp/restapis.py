@@ -1,44 +1,70 @@
 # Uncomment the imports below before you add the function code
 import requests
 import os
+from urllib.parse import quote
 
-backend_url = os.getenv('backend_url', default="http://localhost:3030")
-sentiment_analyzer_url = os.getenv('sentiment_analyzer_url', default="http://localhost:5050/")
-
+backend_url = os.getenv("backend_url", default="http://localhost:3030")
+sentiment_analyzer_url = os.getenv("sentiment_analyzer_url", default="http://localhost:5050/")
 
 def get_request(endpoint, **kwargs):
-    params = ""
-    if kwargs:
-        for key, value in kwargs.items():
-            params = params + key + "=" + str(value) + "&"
+    """
+    Calls the Node backend with GET.
+    Example:
+      get_request("/fetchDealers")
+      get_request("/fetchDealers/TX")
+    """
+    request_url = backend_url.rstrip("/") + endpoint
 
-    request_url = backend_url + endpoint + "?" + params
-
-    print("GET from {} ".format(request_url))
     try:
-        # Call get method of requests library with URL and parameters
-        response = requests.get(request_url)
+        response = requests.get(request_url, params=kwargs if kwargs else None, timeout=10)
+        response.raise_for_status()
         return response.json()
-    except Exception:
-        # If any error occurs
-        print("Network exception occurred")
+    except Exception as e:
+        print(f"Network exception occurred in get_request: {e}")
         return None
 
 
-# def analyze_review_sentiments(text):
-# request_url = sentiment_analyzer_url+"analyze/"+text
-# Add code for retrieving sentiments
+def analyze_review_sentiments(text):
+    """
+    Calls sentiment analyzer service.
+    Expects something like:
+      GET {sentiment_analyzer_url}/analyze/<text>
+    Returns:
+      {"sentiment": "positive" | "negative" | "neutral", ...}
+    """
+    if text is None:
+        return {"sentiment": "neutral"}
 
-# def post_review(data_dict):
-# Add code for posting review
+    # URL encode (space, Turkish chars, punctuation vs.)
+    encoded_text = quote(str(text))
+
+    request_url = sentiment_analyzer_url.rstrip("/") + "/analyze/" + encoded_text
+
+    try:
+        response = requests.get(request_url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        # Güvenli fallback: sentiment anahtarı yoksa neutral dön
+        if isinstance(data, dict) and "sentiment" in data:
+            return data
+        return {"sentiment": "neutral"}
+    except Exception as e:
+        print(f"Network exception occurred in analyze_review_sentiments: {e}")
+        return {"sentiment": "neutral"}
 
 
 def post_review(data_dict):
-    request_url = backend_url + "/insert_review"
+    """
+    Posts review to Node backend.
+    Expects:
+      POST {backend_url}/insert_review   (body: JSON)
+    """
+    request_url = backend_url.rstrip("/") + "/insert_review"
     try:
-        response = requests.post(request_url, json=data_dict)
-        print(response.json())
+        response = requests.post(request_url, json=data_dict, timeout=10)
+        response.raise_for_status()
         return response.json()
-    except Exception:
-        print("Network exception occurred")
+    except Exception as e:
+        print(f"Network exception occurred in post_review: {e}")
         return None
