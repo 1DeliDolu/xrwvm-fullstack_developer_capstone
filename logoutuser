@@ -1,0 +1,19 @@
+# cURL command to log out using session cookie
+curl -i -X GET http://localhost:8000/djangoapp/logout -H "Cookie: sessionid=v4hnqvhvi84oe8hdaqffsweo2rbvub2t"
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    16  100    16    0     0    272      0 --:--:-- --:--:-- --:--:--   271100    16  100    16    0     0    221      0 --:--:-- --:--:-- --:--:--   219
+HTTP/1.1 200 OK
+Date: Thu, 15 Jan 2026 19:34:32 GMT
+Server: WSGIServer/0.2 CPython/3.12.3
+Content-Type: application/json
+X-Frame-Options: DENY
+Content-Length: 16
+Vary: Cookie
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+Set-Cookie: sessionid=""; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/; SameSite=Lax
+
+{"userName": ""}

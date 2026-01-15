@@ -1,0 +1,14 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   593  100   593    0     0  11337      0 --:--:-- --:--:-- --:--:-- 11403
+HTTP/1.1 200 OK
+Date: Thu, 15 Jan 2026 19:50:15 GMT
+Server: WSGIServer/0.2 CPython/3.12.3
+Content-Type: application/json
+X-Frame-Options: DENY
+Content-Length: 593
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+
+{"status": 200, "reviews": [{"_id": "69693ff685776e89f6a07d8c", "id": 19, "name": "Dalenna Foxen", "dealership": 2, "review": "Profound discrete definition", "purchase": false, "purchase_date": "11/14/2020", "car_make": "Mercedes-Benz", "car_model": "S-Class", "car_year": 2003, "__v": 0, "sentiment": "neutral"}, {"_id": "69693ff685776e89f6a07da7", "id": 46, "name": "Reece Fronczak", "dealership": 2, "review": "Polarised client-server methodology", "purchase": true, "purchase_date": "07/04/2020", "car_make": "BMW", "car_model": "760", "car_year": 2005, "__v": 0, "sentiment": "neutral"}]}

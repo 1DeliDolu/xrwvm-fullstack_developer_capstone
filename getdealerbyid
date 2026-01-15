@@ -1,0 +1,14 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   278  100   278    0     0   5128      0 --:--:-- --:--:-- --:--:--  5148
+HTTP/1.1 200 OK
+Date: Thu, 15 Jan 2026 19:40:18 GMT
+Server: WSGIServer/0.2 CPython/3.12.3
+Content-Type: application/json
+X-Frame-Options: DENY
+Content-Length: 278
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+
+{"status": 200, "dealer": [{"_id": "69693ff685776e89f6a07d48", "id": 2, "city": "Minneapolis", "state": "Minnesota", "address": "6337 Butternut Crossing", "zip": "55402", "lat": "44.9762", "long": "-93.2759", "short_name": "Temp", "full_name": "Temp Car Dealership", "__v": 0}]}
