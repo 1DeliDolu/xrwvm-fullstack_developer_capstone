@@ -13,6 +13,7 @@ dist/
 
 # Virtual environments
 djangoenv/
+server/djangoenv/
 venv/
 env/
 ENV/
