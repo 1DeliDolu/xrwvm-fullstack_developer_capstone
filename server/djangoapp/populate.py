@@ -13,7 +13,10 @@ def initiate():
     car_make_instances = []
     for data in car_make_data:
         car_make, _created = CarMake.objects.get_or_create(
-            name=data["name"], defaults={"description": data.get("description", "")}
+            name=data["name"],
+            defaults={
+                "description": data.get("description", ""),
+            },
         )
         car_make_instances.append(car_make)
 
@@ -114,7 +117,10 @@ def initiate():
 
     for data in car_model_data:
         # avoid duplicate car models with same name and car_make
-        if not CarModel.objects.filter(name=data["name"], car_make=data["car_make"]).exists():
+        if not CarModel.objects.filter(
+            name=data["name"],
+            car_make=data["car_make"],
+        ).exists():
             # normalize type to match choices (SEDAN, SUV, WAGON)
             t = data.get("type", "")
             t_upper = ""
