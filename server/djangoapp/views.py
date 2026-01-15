@@ -16,7 +16,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 
 from .populate import initiate
-from .models import CarMake, CarModel
+from .models import  CarModel
 
 from .restapis import get_request, analyze_review_sentiments, post_review
 
@@ -143,11 +143,22 @@ def get_dealer_reviews(request, dealer_id):
         endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
 
+        # Ensure reviews is iterable; if not, return empty list
+        if not reviews:
+            return JsonResponse({"status": 200, "reviews": []})
+        if not hasattr(reviews, "__iter__") or isinstance(reviews, (str, bytes, dict)):
+            # Non-iterable or unexpected type returned; normalize to empty list
+            return JsonResponse({"status": 200, "reviews": []})
+
         # Her review için sentiment ekle
         for review_detail in reviews:
-            response = analyze_review_sentiments(review_detail["review"])
-            print(response)
-            review_detail["sentiment"] = response["sentiment"]
+            review_text = review_detail.get("review") if isinstance(review_detail, dict) else None
+            if review_text:
+                response = analyze_review_sentiments(review_text)
+                print(response)
+                review_detail["sentiment"] = response.get("sentiment")
+            else:
+                review_detail["sentiment"] = None
 
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
