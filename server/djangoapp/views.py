@@ -170,7 +170,7 @@ def add_review(request):
     if request.method != "POST":
         return JsonResponse({"message": "Only POST method is allowed"}, status=405)
 
-    if request.user.is_anonymous == False:
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
             response = post_review(data)
