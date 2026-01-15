@@ -8,54 +8,72 @@
 # from django.contrib import messages
 # from datetime import datetime
 
-from django.http import JsonResponse
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.models import User
-import logging
 import json
+import logging
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from .models import CarModel
 from .populate import initiate
-from .models import  CarModel
-
-from .restapis import get_request, analyze_review_sentiments, post_review
-
-
+from .restapis import (
+    analyze_review_sentiments,
+    get_request,
+    post_review,
+)
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
-
 @csrf_exempt
 def login_user(request):
     if request.method != "POST":
-        return JsonResponse({"message": "Only POST method is allowed"}, status=405)
+        return JsonResponse(
+            {"message": "Only POST method is allowed"},
+            status=405,
+        )
 
     try:
         data = json.loads(request.body.decode("utf-8"))
     except Exception:
-        return JsonResponse({"message": "Invalid JSON"}, status=400)
+        return JsonResponse(
+            {"message": "Invalid JSON"},
+            status=400,
+        )
 
     username = data.get("userName")
     password = data.get("password")
 
     if not username or not password:
-        return JsonResponse({"userName": username, "status": "Failed"}, status=400)
+        return JsonResponse(
+            {"userName": username, "status": "Failed"},
+            status=400,
+        )
 
     user = authenticate(username=username, password=password)
     if user is None:
-        return JsonResponse({"userName": username, "status": "Failed"}, status=401)
+        return JsonResponse(
+            {"userName": username, "status": "Failed"},
+            status=401,
+        )
 
     login(request, user)
-    return JsonResponse({"userName": username, "status": "Authenticated"}, status=200)
+    return JsonResponse(
+        {"userName": username, "status": "Authenticated"},
+        status=200,
+    )
 
 
 @csrf_exempt
 def logout_user(request):
     if request.method != "GET":
-        return JsonResponse({"message": "Only GET method is allowed"}, status=405)
+        return JsonResponse(
+            {"message": "Only GET method is allowed"},
+            status=405,
+        )
 
     logout(request)
     data = {"userName": ""}
@@ -66,12 +84,18 @@ def logout_user(request):
 @csrf_exempt
 def registration(request):
     if request.method != "POST":
-        return JsonResponse({"message": "Only POST method is allowed"}, status=405)
+        return JsonResponse(
+            {"message": "Only POST method is allowed"},
+            status=405,
+        )
 
     try:
         data = json.loads(request.body.decode("utf-8"))
     except Exception:
-        return JsonResponse({"message": "Invalid JSON"}, status=400)
+        return JsonResponse(
+            {"message": "Invalid JSON"},
+            status=400,
+        )
 
     username = data.get("userName")
     password = data.get("password")
@@ -80,7 +104,10 @@ def registration(request):
     email = data.get("email")
 
     if not username or not password:
-        return JsonResponse({"userName": username, "status": "Failed"}, status=400)
+        return JsonResponse(
+            {"userName": username, "status": "Failed"},
+            status=400,
+        )
 
     username_exist = False
     try:
@@ -95,12 +122,18 @@ def registration(request):
             first_name=first_name or "",
             last_name=last_name or "",
             password=password,
-            email=email or ""
+            email=email or "",
         )
         login(request, user)
-        return JsonResponse({"userName": username, "status": "Authenticated"}, status=200)
+        return JsonResponse(
+            {"userName": username, "status": "Authenticated"},
+            status=200,
+        )
     else:
-        return JsonResponse({"userName": username, "error": "Already Registered"}, status=400)
+        return JsonResponse(
+            {"userName": username, "error": "Already Registered"},
+            status=400,
+        )
 
 
 def get_cars(request):
@@ -111,7 +144,12 @@ def get_cars(request):
     car_models = CarModel.objects.select_related("car_make").all()
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append(
+            {
+                "CarModel": car_model.name,
+                "CarMake": car_model.car_make.name,
+            }
+        )
 
     return JsonResponse({"CarModels": cars}, status=200)
 
@@ -132,9 +170,13 @@ def get_dealer_details(request, dealer_id):
     if dealer_id:
         endpoint = "/fetchDealer/" + str(dealer_id)
         dealership = get_request(endpoint)
-        return JsonResponse({"status": 200, "dealer": dealership})
+        return JsonResponse(
+            {"status": 200, "dealer": dealership},
+        )
     else:
-        return JsonResponse({"status": 400, "message": "Bad Request"})
+        return JsonResponse(
+            {"status": 400, "message": "Bad Request"},
+        )
 
 
 def get_dealer_reviews(request, dealer_id):
@@ -145,14 +187,25 @@ def get_dealer_reviews(request, dealer_id):
 
         # Ensure reviews is iterable; if not, return empty list
         if not reviews:
-            return JsonResponse({"status": 200, "reviews": []})
-        if not hasattr(reviews, "__iter__") or isinstance(reviews, (str, bytes, dict)):
+            return JsonResponse(
+                {"status": 200, "reviews": []},
+            )
+        if not hasattr(reviews, "__iter__") or isinstance(
+            reviews,
+            (str, bytes, dict),
+        ):
             # Non-iterable or unexpected type returned; normalize to empty list
-            return JsonResponse({"status": 200, "reviews": []})
+            return JsonResponse(
+                {"status": 200, "reviews": []},
+            )
 
         # Her review için sentiment ekle
         for review_detail in reviews:
-            review_text = review_detail.get("review") if isinstance(review_detail, dict) else None
+            review_text = (
+                review_detail.get("review")
+                if isinstance(review_detail, dict)
+                else None
+            )
             if review_text:
                 response = analyze_review_sentiments(review_text)
                 print(response)
@@ -162,21 +215,32 @@ def get_dealer_reviews(request, dealer_id):
 
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
-        return JsonResponse({"status": 400, "message": "Bad Request"})
+        return JsonResponse(
+            {"status": 400, "message": "Bad Request"},
+        )
 
 
 @csrf_exempt
 def add_review(request):
     if request.method != "POST":
-        return JsonResponse({"message": "Only POST method is allowed"}, status=405)
+        return JsonResponse(
+            {"message": "Only POST method is allowed"},
+            status=405,
+        )
 
     if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
             response = post_review(data)
             print(response)
-            return JsonResponse({"status": 200, "message": "Review posted successfully"})
+            return JsonResponse(
+                {"status": 200, "message": "Review posted successfully"},
+            )
         except Exception:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse(
+                {"status": 401, "message": "Error in posting review"},
+            )
     else:
-        return JsonResponse({"status": 403, "message": "Unauthorized"})
+        return JsonResponse(
+            {"status": 403, "message": "Unauthorized"},
+        )
