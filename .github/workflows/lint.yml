@@ -23,6 +23,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          # If a project requirements file exists under server/, install it
+          if [ -f server/requirements.txt ]; then
+            pip install -r server/requirements.txt
+          fi
+          # Ensure flake8 is available for linting
           pip install flake8
 
       - name: Run flake8 (server recursively)
