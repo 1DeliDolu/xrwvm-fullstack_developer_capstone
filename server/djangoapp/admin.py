@@ -18,6 +18,7 @@ class CarModelAdmin(admin.ModelAdmin):
 class CarMakeAdmin(admin.ModelAdmin):
     list_display = ("name", "country", "website")
     search_fields = ("name",)
+
     inlines = [CarModelInline]
 
 
