@@ -21,7 +21,7 @@ const Dealer = () => {
   let params = useParams();
   let id =params.id;
   let dealer_url = root_url+`djangoapp/dealer/${id}`;
-  let reviews_url = root_url+`djangoapp/reviews/dealer/${id}`;
+  let reviews_url = root_url+`djangoapp/dealer/${id}/reviews`;
   let post_review = root_url+`postreview/${id}`;
   
   const get_dealer = async ()=>{
@@ -74,17 +74,19 @@ return(
       <h1 style={{color:"grey"}}>{dealer.full_name}{postReview}</h1>
       <h4  style={{color:"grey"}}>{dealer['city']},{dealer['address']}, Zip - {dealer['zip']}, {dealer['state']} </h4>
       </div>
-      <div class="reviews_panel">
+      <div className="reviews_panel">
       {reviews.length === 0 && unreviewed === false ? (
-        <text>Loading Reviews....</text>
-      ):  unreviewed === true? <div>No reviews yet! </div> :
+        <p>Loading Reviews...</p>
+      ) : unreviewed === true ? (
+        <div>No reviews yet!</div>
+      ) : (
       reviews.map(review => (
         <div className='review_panel'>
           <img src={senti_icon(review.sentiment)} className="emotion_icon" alt='Sentiment'/>
           <div className='review'>{review.review}</div>
           <div className="reviewer">{review.name} {review.car_make} {review.car_model} {review.car_year}</div>
         </div>
-      ))}
+      ))) }
     </div>  
   </div>
 )
