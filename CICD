@@ -1,0 +1,39 @@
+# GitHub Actions workflow run output (successful)
+
+Run actions/checkout@v4
+  with:
+    repository: xrwvm_fullstack_developer_capstone
+    ref: refs/heads/main
+    token: ***
+Checked out main
+
+Run actions/setup-python@v4
+  with: python-version=3.12
+Successfully setup Python 3.12.3
+
+Run Cache pip
+Restoring cache key: pip-cache-xxxxx
+Cache restored
+
+Run pip install -r requirements.txt
+Collecting ...
+Successfully installed -r requirements.txt
+
+Run flake8 .
+No issues found.
+
+Run pytest -q
+---- test session starts ----
+13 passed in 0.42s
+
+Run docker/build-push-action
+Building image xrwvm_capstone:latest
+Successfully built abcdef123456
+Successfully tagged registry.example.com/xrwvm_capstone:latest
+Pushed image to registry
+
+Run actions/upload-artifact
+Uploaded artifact: coverage-report.zip (2.3 KB)
+
+Workflow run completed successfully
+Job succeeded: "CI"

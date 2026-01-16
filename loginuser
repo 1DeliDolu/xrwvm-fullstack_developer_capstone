@@ -1,16 +1,18 @@
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    91  100    48  100    43     59     53 --:--:-- --:--:-- --:--:--   113
-HTTP/1.1 200 OK
-Date: Thu, 15 Jan 2026 19:32:10 GMT
-Server: WSGIServer/0.2 CPython/3.12.3
-Content-Type: application/json
-X-Frame-Options: DENY
-Content-Length: 48
-Vary: Cookie
-X-Content-Type-Options: nosniff
-Referrer-Policy: same-origin
-Cross-Origin-Opener-Policy: same-origin
-Set-Cookie: sessionid=v4hnqvhvi84oe8hdaqffsweo2rbvub2t; expires=Thu, 29 Jan 2026 19:32:10 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
+curl -i -c cookies.txt -X POST http://localhost:8000/djangoapp/login \
+  -H "Content-Type: application/json" \
+  -d '{"userName":"admin","password":"Passw0rd!"}'
 
+# Captured response:
+# HTTP/1.1 200 OK
+# Date: Thu, 15 Jan 2026 20:33:22 GMT
+# Server: WSGIServer/0.2 CPython/3.12.3
+# Content-Type: application/json
+# X-Frame-Options: DENY
+# Content-Length: 48
+# Vary: Cookie
+# X-Content-Type-Options: nosniff
+# Referrer-Policy: same-origin
+# Cross-Origin-Opener-Policy: same-origin
+# Set-Cookie: sessionid=z3ixjui0nkw3r70y864i082fgeybgdcl; expires=Thu, 29 Jan 2026 20:33:22 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
+#
 {"userName": "admin", "status": "Authenticated"}

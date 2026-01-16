@@ -1,8 +1,6 @@
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   681  100   681    0     0  12678      0 --:--:-- --:--:-- --:--:-- 12849
+curl -i -b cookies.txt http://localhost:8000/djangoapp/get_cars
 HTTP/1.1 200 OK
-Date: Thu, 15 Jan 2026 19:43:46 GMT
+Date: Fri, 16 Jan 2026 00:27:24 GMT
 Server: WSGIServer/0.2 CPython/3.12.3
 Content-Type: application/json
 X-Frame-Options: DENY

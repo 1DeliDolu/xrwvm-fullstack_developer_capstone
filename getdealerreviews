@@ -1,14 +1,14 @@
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   593  100   593    0     0   6477      0 --:--:-- --:--:-- --:--:--  6516
-HTTP/1.1 200 OK
-Date: Thu, 15 Jan 2026 19:36:58 GMT
-Server: WSGIServer/0.2 CPython/3.12.3
-Content-Type: application/json
-X-Frame-Options: DENY
-Content-Length: 593
-X-Content-Type-Options: nosniff
-Referrer-Policy: same-origin
-Cross-Origin-Opener-Policy: same-origin
+curl -i -b cookies.txt http://localhost:8000/djangoapp/dealer/15/reviews
 
-{"status": 200, "reviews": [{"_id": "69693ff685776e89f6a07d8c", "id": 19, "name": "Dalenna Foxen", "dealership": 2, "review": "Profound discrete definition", "purchase": false, "purchase_date": "11/14/2020", "car_make": "Mercedes-Benz", "car_model": "S-Class", "car_year": 2003, "__v": 0, "sentiment": "neutral"}, {"_id": "69693ff685776e89f6a07da7", "id": 46, "name": "Reece Fronczak", "dealership": 2, "review": "Polarised client-server methodology", "purchase": true, "purchase_date": "07/04/2020", "car_make": "BMW", "car_model": "760", "car_year": 2005, "__v": 0, "sentiment": "neutral"}]}
+# Captured response:
+# HTTP/1.1 200 OK
+# Date: Thu, 15 Jan 2026 20:33:22 GMT
+# Server: WSGIServer/0.2 CPython/3.12.3
+# Content-Type: application/json
+# X-Frame-Options: DENY
+# Content-Length: 864
+# X-Content-Type-Options: nosniff
+# Referrer-Policy: same-origin
+# Cross-Origin-Opener-Policy: same-origin
+#
+{"status": 200, "reviews": [{"_id": "69693ff685776e89f6a07d7a", "id": 1, "name": "Berkly Shepley", "dealership": 15, "review": "Total grid-enabled service-desk", "purchase": true, "purchase_date": "07/11/2020", "car_make": "Audi", "car_model": "A6", "car_year": 2010, "__v": 0, "sentiment": "neutral"}, {"_id": "69693ff685776e89f6a07d9e", "id": 37, "name": "Albrecht Collen", "dealership": 15, "review": "Pre-emptive heuristic solution", "purchase": true, "purchase_date": "10/10/2020", "car_make": "Lexus", "car_model": "IS F", "car_year": 2009, "__v": 0, "sentiment": "neutral"}, {"_id": "69693ff685776e89f6a07d9f", "id": 38, "name": "Prudi Minchi", "dealership": 15, "review": "Mandatory homogeneous groupware", "purchase": true, "purchase_date": "01/06/2021", "car_make": "Saturn", "car_model": "L-Series", "car_year": 2001, "__v": 0, "sentiment": "neutral"}]}
